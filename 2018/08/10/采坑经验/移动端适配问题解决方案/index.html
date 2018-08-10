@@ -1,0 +1,983 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans,en,default">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="移动端适配,采坑经验," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="前言随着时间的发展，现在基本上人手一部手机的低头族。做为前端开发的程序猿，在开发移动端web应用的时候，对面一堆各色尺寸不一样的屏幕，就有点淡淡的忧伤。已上是2018年二月份最新的友盟数据，可在这里查看详情 很明显我们所要实现的就是在上述如此之多的屏幕,都能实现UI大大出的视觉图上的效果。而要实现这样的效果主要有两个难点  各屏幕适配 Retina屏下的细节处理（主要是1px的问题）  各屏幕适配">
+<meta name="keywords" content="移动端适配,采坑经验">
+<meta property="og:type" content="article">
+<meta property="og:title" content="移动端适配问题解决方案">
+<meta property="og:url" content="http://yoursite.com/2018/08/10/采坑经验/移动端适配问题解决方案/index.html">
+<meta property="og:site_name" content="QttFE团队">
+<meta property="og:description" content="前言随着时间的发展，现在基本上人手一部手机的低头族。做为前端开发的程序猿，在开发移动端web应用的时候，对面一堆各色尺寸不一样的屏幕，就有点淡淡的忧伤。已上是2018年二月份最新的友盟数据，可在这里查看详情 很明显我们所要实现的就是在上述如此之多的屏幕,都能实现UI大大出的视觉图上的效果。而要实现这样的效果主要有两个难点  各屏幕适配 Retina屏下的细节处理（主要是1px的问题）  各屏幕适配">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/4/23/162f128e831ad04c?w=2004&h=1156&f=png&s=188536">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/4/23/162f129376ca097c?w=1958&h=1182&f=png&s=193433">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/8/10/165226b92cc2ceb2?w=1180&h=585&f=png&s=99490">
+<meta property="og:updated_time" content="2018-08-10T06:10:38.366Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="移动端适配问题解决方案">
+<meta name="twitter:description" content="前言随着时间的发展，现在基本上人手一部手机的低头族。做为前端开发的程序猿，在开发移动端web应用的时候，对面一堆各色尺寸不一样的屏幕，就有点淡淡的忧伤。已上是2018年二月份最新的友盟数据，可在这里查看详情 很明显我们所要实现的就是在上述如此之多的屏幕,都能实现UI大大出的视觉图上的效果。而要实现这样的效果主要有两个难点  各屏幕适配 Retina屏下的细节处理（主要是1px的问题）  各屏幕适配">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/4/23/162f128e831ad04c?w=2004&h=1156&f=png&s=188536">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'ZI5P01N7WJ',
+      apiKey: '1f887f3f7c6f75eebec87f1a656dd34f',
+      indexName: 'QttFE',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/10/采坑经验/移动端适配问题解决方案/"/>
+
+
+
+
+
+  <title> 移动端适配问题解决方案 | QttFE团队 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-123641515-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">QttFE团队</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/10/采坑经验/移动端适配问题解决方案/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="QttFE">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/logo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="QttFE团队">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                移动端适配问题解决方案
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-10T13:58:04+08:00">
+                2018-08-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/采坑经验/" itemprop="url" rel="index">
+                    <span itemprop="name">采坑经验</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>随着时间的发展，现在基本上人手一部手机的低头族。做为前端开发的程序猿，在开发移动端web应用的时候，对面一堆各色尺寸不一样的屏幕，就有点淡淡的忧伤。<br><img src="https://user-gold-cdn.xitu.io/2018/4/23/162f128e831ad04c?w=2004&amp;h=1156&amp;f=png&amp;s=188536" alt=""><br><img src="https://user-gold-cdn.xitu.io/2018/4/23/162f129376ca097c?w=1958&amp;h=1182&amp;f=png&amp;s=193433" alt=""><br>已上是2018年二月份最新的友盟数据，可在<a href="http://compass.umeng.com/?spm=a211g2.181323.0.0.5c633604ZUwuxp&amp;&amp;utm_source=zzbanner#/equipment?_k=xf1l4k" target="_blank" rel="noopener">这里</a>查看详情</p>
+<p>很明显我们所要实现的就是在上述如此之多的屏幕,都能实现UI大大出的视觉图上的效果。而要实现这样的效果主要有两个难点</p>
+<ol>
+<li>各屏幕适配</li>
+<li>Retina屏下的细节处理（主要是1px的问题）</li>
+</ol>
+<h1 id="各屏幕适配"><a href="#各屏幕适配" class="headerlink" title="各屏幕适配"></a>各屏幕适配</h1><p>各屏幕的适配，有两种方案，<code>flexible + rem</code> 与 <code>vw</code>。这三个单词是什么意思，看着很眼熟，但是这两个方案居然是什么呢,请允许我细细道来。</p>
+<h2 id="flexible-rem"><a href="#flexible-rem" class="headerlink" title="flexible + rem"></a>flexible + rem</h2><p>显而易见,该方案是由rem 以及 flexible组成的。rem （font size of the root element）相对于根元素(即html元素)font-size计算值的倍数,flexible 即 flexible.js, 手淘团队提供的一个为该方案屏幕适配而写的一个库,主要实现的功能就是，根据屏幕的宽度给 html 元素设置一个合适的 font-size 值。</p>
+<p>怎么样看的不是很懂是吧。让我来用一个页面场景再复述一遍。</p>
+<p>正常情况下，我们的UI大大会以iphone6的尺寸为标准，做一套视觉效果图，并在上面进行标注，给到我们的标注图</p>
+<p>拿到这个图 我们该如何下手呢</p>
+<ol>
+<li>先设置 html 元素的 font-size, 这个值我们暂时设置为 font-size: 37.5px，即1rem = 37.5px;</li>
+<li>以iphone6为例子，其屏幕宽度为 750px, 整个屏幕的宽度即 20rem = 37.5 * 20px = 750px;</li>
+<li>此时手机号的输入框为 490px = 13.06777777rem</li>
+<li>依次将页面上的px转换为rem，这样我们就得到了全是rem为尺寸单位的页面</li>
+</ol>
+<p>到这里为止是不是就结束了呢 ? 很遗憾的告诉你并不是。为什么 html 元素的 font-size 要设置为 37.5px呢？现在这个界面在iphone6上能完美显示了，在iphone5s,iphone6p能完美显示吗？（iphone6, iphone6s, iphone7. iphone8屏幕没有发生变化，本文直接用iphone6代替了。）<br>上面的两个问题 我们还有没解决，这个时候就轮到flexible登场了。只需要像如下引入就可实现用js来自动根据屏幕宽度设置 html元素的font-size的值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=&quot;http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="引申一下"><a href="#引申一下" class="headerlink" title="引申一下"></a>引申一下</h3><p>在上述过程中，你会发现，UI给到我们的一般是px标注的图，我们将其转化为rem，这个过程其实会花费很大的计算时间。做为一个合格的程序员，我们应该把这种机械性无脑的操作交给计算机来实现。我使用的是PostCss的插件 <a href="https://www.npmjs.com/package/postcss-px2rem" target="_blank" rel="noopener">postcss-px2rem</a>,这个插件能让我们在写代码时候直接写px，在构建的时候自动将我们所写的px转换为rem，大大提升了我们的开发效率。</p>
+<h2 id="vw"><a href="#vw" class="headerlink" title="vw"></a>vw</h2><p>这个vw的方案，相当而言还比较新。vw 即（viewport width）可视窗口的宽度。之所以把这个方案放在后面来说，是因为viewport在去年（2017年）的时候存在不少的兼容性问题，各个浏览器的支持并不是很好。但是来到了2018年这个时间点，viewport单位意见得到了众多浏览器的支持（92.69%）。<br><img src="https://user-gold-cdn.xitu.io/2018/8/10/165226b92cc2ceb2?w=1180&amp;h=585&amp;f=png&amp;s=99490" alt=""><br>可以在<a href="https://caniuse.com/#search=vw" target="_blank" rel="noopener">这里</a>查看。</p>
+<p>接下来就让我们来正式了解下这个方案吧。<br>vw既然是一个尺寸单位，那它的宽度等于多少呢？等于1%整个屏幕的宽度。举个例子，再次以iphone6手机为例，100vw = 750px =&gt; 1vw = 7.5px</p>
+<ol>
+<li>根据定义，我们了解了在iphone6手机上 1vw = 7.5px</li>
+<li>此时手机号的输入框为 490px = 65.333333vw</li>
+<li>依次将页面上的px转换为vw，这样我们就得到了全是vw为尺寸单位的页面</li>
+</ol>
+<p>到这里为止是不是就结束了呢? 是的就是这么简单。</p>
+<h3 id="引申一下-1"><a href="#引申一下-1" class="headerlink" title="引申一下"></a>引申一下</h3><p>跟之前一样的痛点，我们仍然需要花费大量不必要的计算时间去把标注图中的px转换为vw，有没有类似于postcss-px2rem的工具呢？很荣幸能再次站在巨人的肩膀上，已经有大神写了了类似的PostCss插件 <a href="https://github.com/evrone/postcss-px-to-viewport" target="_blank" rel="noopener">postcss-px-to-viewport</a></p>
+<h1 id="1px问题"><a href="#1px问题" class="headerlink" title="1px问题"></a>1px问题</h1><p>移动端的屏幕不仅仅分辨率有差异，其实还有Retina屏的问题。正常情况下，我们代码里的1px在屏幕上就应该显示一个像素点，但是在Retina屏下则不仅仅是一个像素点。再次拿iphone6为例，其dpr(device pixel ratio)设备像素比为2，css中一个1x1的点，其实在iphone6上是2x2的点,并且1px的边框在devicePixelRatio = 2的Retina屏下会显示成2px，在iPhone6 Plus下甚至会显示成3px。</p>
+<p>这样的话，我们就会发现在有些手机上1px明显跟另外的一些手机的1px粗细不一样。<br>其实大多数的小公司不会扣这样的一个细节，比如说我们公司不会。(<em>^__^</em>) 嘻嘻……</p>
+<p>但是作为一个有追求的前端工程师，我们应该尽量的把事情做的完美一点，（ps.像大公司看齐，在大公司这个细节问题其实是不容忽视的，为了自己以后的发展前途，我们有必要把这个细节完善掉的。）</p>
+<p>这个问题的解决方案有很多，个人觉得最简单方面的还是大漠大大的一种解决方案。使用<a href="https://github.com/jonathantneal/postcss-write-svg" target="_blank" rel="noopener">postcss-write-svg</a>插件,</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">svg</span> <span class="number">1px</span>-border &#123;</span><br><span class="line">  <span class="selector-tag">height</span>: 2<span class="selector-tag">px</span>;</span><br><span class="line">  @<span class="keyword">rect</span> &#123;</span><br><span class="line">    <span class="selector-tag">fill</span>: <span class="selector-tag">var</span>(<span class="selector-tag">--color</span>, <span class="selector-tag">black</span>);</span><br><span class="line">    <span class="selector-tag">width</span>: 100%; <span class="selector-tag">height</span>: 50%;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="selector-class">.example</span> &#123;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">1px</span> solid transparent;</span><br><span class="line">  <span class="attribute">border-image</span>: <span class="built_in">svg</span>(1px-border param(--color #00b1ff)) <span class="number">2</span> <span class="number">2</span> stretch;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译出来就是</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.example</span> &#123;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">1px</span> solid transparent;</span><br><span class="line">  <span class="attribute">border-image</span>: <span class="built_in">url</span>(<span class="string">"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' height='2px'%3E%3Crect fill='%2300b1ff' width='100%25' height='50%25'/%3E%3C/svg%3E"</span>) <span class="number">2</span> <span class="number">2</span> stretch;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><h2 id="小程序中的屏幕适配"><a href="#小程序中的屏幕适配" class="headerlink" title="小程序中的屏幕适配"></a>小程序中的屏幕适配</h2><p>最近在写小程序，在小程序里，使用的是小程序的那套，跟平时用的vue全家桶以及react全家桶不一样，并没有配置webpack，在这种情况下我们使用postcss其实很困难（反正我是搞不出来/(ㄒoㄒ)/~~）</p>
+<p>那该怎么办呢，小程序提供了一个自己的单位, rpx（responsive pixel）: 可以根据屏幕宽度进行自适应。规定屏幕宽为750rpx。如在 iPhone6 上，屏幕宽度为375px，共有750个物理像素，则750rpx = 375px = 750物理像素，1rpx = 0.5px = 1物理像素。</p>
+<table>
+<thead>
+<tr>
+<th>设备</th>
+<th>rpx换算px (屏幕宽度/750)</th>
+<th>px换算rpx (750/屏幕宽度)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>iPhone5</td>
+<td>1rpx = 0.42px</td>
+<td>1px = 2.34rpx</td>
+</tr>
+<tr>
+<td>iPhone6</td>
+<td>1rpx = 0.5px</td>
+<td>1px = 2rpx</td>
+</tr>
+<tr>
+<td>iPhone6p</td>
+<td>1rpx = 0.552px</td>
+<td>1px = 1.81rpx</td>
+</tr>
+</tbody>
+</table>
+<p>我们直接用拿到iphone6的标注图，直接写rpx就好。棒👍</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>如果仔细看一下的话，会发现之前的rem的方案其实就是模拟了vw的实现方案，两者有非常多的相似之处。在<a href="https://github.com/amfe/lib-flexible" target="_blank" rel="noopener">lib-flexible</a>的github上有着这样的一句话。</p>
+<blockquote>
+<p>由于viewport单位得到众多浏览器的兼容，lib-flexible这个过渡方案已经可以放弃使用，不管是现在的版本还是以前的版本，都存有一定的问题。建议大家开始使用viewport来替代此方案。vw的兼容方案可以参阅《如何在Vue项目中使用vw实现移动端适配》一文。</p>
+</blockquote>
+<p>我们可以得到一个很明确的信息，lib-flexible这个方案已经被放弃使用了，我们可以去拥抱vw的那套实现方案。</p>
+<p>本文参考了大漠大大在 <a href="http://www.w3cplus.com" target="_blank" rel="noopener">www.w3cplus.com</a> 里的多篇文章</p>
+<ol>
+<li><a href="https://www.w3cplus.com/mobile/lib-flexible-for-html5-layout.html" target="_blank" rel="noopener">使用Flexible实现手淘H5页面的终端适配</a></li>
+<li><a href="https://www.w3cplus.com/css/vw-for-layout.html" target="_blank" rel="noopener">再聊移动端页面的适配</a></li>
+<li><a href="https://www.w3cplus.com/css/towards-retina-web.html" target="_blank" rel="noopener">走向视网膜（Retina）的Web时代</a></li>
+<li><a href="https://www.w3cplus.com/css/fix-1px-for-retina.html" target="_blank" rel="noopener">再谈Retina下1px的解决方案</a></li>
+<li><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/view/wxss.html" target="_blank" rel="noopener">小程序-wxss</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/移动端适配/" rel="tag"># 移动端适配</a>
+          
+            <a href="/tags/采坑经验/" rel="tag"># 采坑经验</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/logo.png"
+               alt="QttFE" />
+          <p class="site-author-name" itemprop="name">QttFE</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#各屏幕适配"><span class="nav-number">2.</span> <span class="nav-text">各屏幕适配</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#flexible-rem"><span class="nav-number">2.1.</span> <span class="nav-text">flexible + rem</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#引申一下"><span class="nav-number">2.1.1.</span> <span class="nav-text">引申一下</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vw"><span class="nav-number">2.2.</span> <span class="nav-text">vw</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#引申一下-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">引申一下</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1px问题"><span class="nav-number">3.</span> <span class="nav-text">1px问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他"><span class="nav-number">4.</span> <span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#小程序中的屏幕适配"><span class="nav-number">4.1.</span> <span class="nav-text">小程序中的屏幕适配</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">QttFE</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
