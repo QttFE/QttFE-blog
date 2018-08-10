@@ -87,5 +87,5 @@ algolia:
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: git@github.com/QttFE/blog.git
+  repo: git@github.com:QttFE/QttFE-blog.git
   branch: gh-pages
