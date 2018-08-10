@@ -1692,7 +1692,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #91c3e0;
+  background: #34ff7e;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2912,5 +2912,10 @@ hr {
   .footer-inner {
     width: auto;
     text-align: center;
+  }
+}
+@media (max-width: 767px) {
+  canvas {
+    display: none;
   }
 }
