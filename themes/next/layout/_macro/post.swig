@@ -89,8 +89,11 @@
           {% if post.author %}
             <span class="post-author" >
               <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-user-o"></i>
+              </span>
               <span class="post-meta-item-text">{{ __('post.copyright.author') }}</span>
-              <span class="post-meta-item-text">{{post.author}}</span>
+              <span>{{post.author}}</span>
             </span>
           {% endif %}
 
