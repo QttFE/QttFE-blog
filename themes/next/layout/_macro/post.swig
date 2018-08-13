@@ -55,7 +55,6 @@
             {% endif %}
           </{% if theme.seo %}h2{% else %}h1{% endif %}>
         {% endif %}
-
         <div class="post-meta">
           <span class="post-time">
             {% if theme.post_meta.created_at %}
@@ -86,6 +85,14 @@
               </time>
             {% endif %}
           </span>
+
+          {% if post.author %}
+            <span class="post-author" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-text">{{ __('post.copyright.author') }}</span>
+              <span class="post-meta-item-text">{{post.author}}</span>
+            </span>
+          {% endif %}
 
           {% if post.categories and post.categories.length and theme.post_meta.categories %}
             <span class="post-category" >
